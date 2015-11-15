@@ -33,16 +33,12 @@ RSpec.describe Model do
 
     it "returns true if two guesses are equal" do
       allow(model).to receive(:boxes).and_return(["a","a","b"])
-      allow(model).to receive(:guess_one).and_return(0)
-      allow(model).to receive(:guess_two).and_return(1)
-      expect(model.matching_set?).to eq(true)
+      expect(model.matching_set?(0,1)).to eq(true)
     end
 
     it "returns false if two guesses aren't equal" do
       allow(model).to receive(:boxes).and_return(["a","a","b"])
-      allow(model).to receive(:guess_one).and_return(1)
-      allow(model).to receive(:guess_two).and_return(2)
-      expect(model.matching_set?).to eq(false)
+      expect(model.matching_set?(1,2)).to eq(false)
     end
 
   end
@@ -51,9 +47,7 @@ RSpec.describe Model do
 
     it "removes a successfully guessed pair" do
       allow(model).to receive(:boxes).and_return(["a","a","b","b"])
-      allow(model).to receive(:guess_one).and_return(0)
-      allow(model).to receive(:guess_two).and_return(1)
-      model.remove_pair
+      model.remove_pair(0,1)
       expect(model.boxes.include? :boxes["a"]).to eq(false)
     end
 
@@ -63,9 +57,7 @@ RSpec.describe Model do
 
     it "removes a pair if matching" do
       allow(model).to receive(:boxes).and_return(["a","a","b"])
-      allow(model).to receive(:guess_one).and_return(0)
-      allow(model).to receive(:guess_two).and_return(1)
-      model.handle_match
+      model.handle_match(0,1)
     end
 
   end

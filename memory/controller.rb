@@ -20,7 +20,7 @@ class Controller
     @ui.show_boxes(@model.boxes, guess_one, nil)
     guess_two = @ui.get_guess
     @ui.show_boxes(@model.boxes, guess_one, guess_two)
-    @model.handle_match
+    @model.handle_match(guess_one, guess_two)
     sleep(3)
     system "clear" or system "cls"
     @ui.announce_tries_left unless !@model.in_progress?

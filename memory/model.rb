@@ -28,17 +28,17 @@ class Model
     TOTAL_TURNS - @attempted_guesses.length
   end
 
-  def handle_match
-    if matching_set?
-      remove_pair
+  def handle_match(guess_one, guess_two)
+    if matching_set?(guess_one, guess_two)
+      remove_pair(guess_one, guess_two)
     end
   end
 
-  def matching_set?
+  def matching_set?(guess_one, guess_two)
     boxes[guess_one] == boxes[guess_two]
   end
 
-  def remove_pair
+  def remove_pair(guess_one, guess_two)
     boxes.delete_at(guess_one)
     boxes.delete_at(guess_two)
   end
