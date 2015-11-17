@@ -1,0 +1,23 @@
+<h1 class="text-center">Hangman</h1>
+
+<p>Your word is: <%= @secret_word %></p>
+
+<% if @status == :playing %>
+  <%= form_for [@game, Turn.new] do |form| %>
+    <%= form.text_field :letter %>
+    <%= form.submit "Submit" %>
+  <% end %>
+<% elsif @status == :won %>
+  <p>Congratulations, you won this round!</p>
+<% elsif @status == :lost %>
+  <p>Bad luck! The word was <%= @word.word %></p>
+<% end %>
+
+<% if @turns %>
+  <p>Your guesses:</p>
+  <p>
+    <% @turns.each do |guess| %>
+        <%= guess.letter %>
+    <% end %>
+  </p>
+<% end %>
