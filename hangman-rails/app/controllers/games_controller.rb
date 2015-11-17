@@ -13,8 +13,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    word_max = Word.count
-    @game = Game.new :word_id => rand(1..word_max)
+    @game = Game.new
 
     @game.save!
     redirect_to @game

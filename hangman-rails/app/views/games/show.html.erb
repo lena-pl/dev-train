@@ -1,6 +1,7 @@
 <h1 class="text-center">Hangman</h1>
 
 <p>Your word is: <%= @secret_word %></p>
+<p>You have <%= @game.lives_left %> lives left</p>
 
 <% if @status == :playing %>
   <%= form_for [@game, Turn.new] do |form| %>
