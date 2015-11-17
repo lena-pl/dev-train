@@ -15,10 +15,6 @@
 <% end %>
 
 <% if @turns %>
-  <p>Your guesses:</p>
-  <p>
-    <% @turns.each do |guess| %>
-        <%= guess.letter %>
-    <% end %>
-  </p>
+  <p>Wrong guesses:</p>
+  <p><%= @game.wrong_guesses.join" " %></p>
 <% end %>
