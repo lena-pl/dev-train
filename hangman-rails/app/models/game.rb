@@ -1,16 +1,14 @@
 class Game < ActiveRecord::Base
-
   LIVES = 8
 
   belongs_to :word
   has_many :turns
 
-  before_validation :set_word, on: :create
+  before_validation :assign_random_word, on: :create
 
   validates :word_id, presence: true
 
-
-  def determine_status
+  def status
     if in_progress?
       :playing
     elsif won?
@@ -25,36 +23,35 @@ class Game < ActiveRecord::Base
   end
 
   def won?
-    lives_left >= 0 && (correct_guesses.uniq.sort == target.uniq.sort)
+    !lost? && correct_guesses.uniq.sort == target_letters.uniq.sort
   end
 
   def lost?
-    wrong_guesses.length >= LIVES
+    lives_left == 0
   end
 
   def lives_left
     LIVES - wrong_guesses.length
   end
 
-  def target
-    Word.find(self.word_id).word.chars
-  end
-
   def correct_guesses
-    correct_guesses = turns.select { |turn| target.include?(turn.letter)}
-    correct_guesses.map { |turn| turn.letter }
+    correct_guesses = turns.select { |turn| target_letters.include?(turn.letter) }
+    correct_guesses.map(&:letter)
   end
 
   def wrong_guesses
-    wrong_guesses = turns.select { |turn| !target.include?(turn.letter)}
-    wrong_guesses.map { |turn| turn.letter }
+    wrong_guesses = turns.select { |turn| target_letters.exclude?(turn.letter) }
+    wrong_guesses.map(&:letter)
   end
 
   protected
 
-  def set_word
-    dictionary = Word.pluck(:id)
-    self.word_id ||= dictionary.sample
+  def assign_random_word
+    word_ids = Word.pluck(:id)
+    self.word_id ||= word_ids.sample
   end
 
+  def target_letters
+    word.word.chars
+  end
 end

@@ -6,7 +6,7 @@ class TurnsController < ApplicationController
     @turn = @game.turns.new(turn_params)
 
     if !@turn.save
-      flash.alert = "That guess is invalid"
+      flash.alert = @turn.errors.messages[:letter].first
     end
 
     redirect_to @game

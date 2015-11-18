@@ -5,7 +5,7 @@ class GamesController < ApplicationController
     @word = Word.find(@game.word_id)
     @turns = Turn.where(game_id: @game.id)
     @secret_word = encrypt(@word.word, @turns)
-    @status = @game.determine_status
+    @status = @game.status
   end
 
   def new
