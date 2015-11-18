@@ -1,20 +1,41 @@
-<h1 class="text-center">Hangman</h1>
+<div class="container">
+  <div class="row">
+    <h1 class="text-center">Play Hangman</h1>
+    <p class="lead text-danger text-center">You have <%= @game.lives_left %> lives left!</p>
+  </div>
 
-<p>Your word is: <%= @secret_word %></p>
-<p>You have <%= @game.lives_left %> lives left</p>
+  <div class="row">
+    <div class="col-sm-offset-4 col-sm-4 play">
 
-<% if @status == :playing %>
-  <%= form_for [@game, Turn.new] do |form| %>
-    <%= form.text_field :letter %>
-    <%= form.submit "Submit" %>
-  <% end %>
-<% elsif @status == :won %>
-  <p>Congratulations, you won this round!</p>
-<% elsif @status == :lost %>
-  <p>Bad luck! The word was <%= @word.word %></p>
-<% end %>
+      <div class="bg-info word text-center">
+        <p class="lead">Your word is:</p>
+        <p><strong><%= @secret_word %></strong></p>
+      </div>
 
-<% if @turns %>
-  <p>Wrong guesses:</p>
-  <p><%= @game.wrong_guesses.join" " %></p>
-<% end %>
+      <% flash.each do |key, value| %>
+          <p><%= value %></p>
+      <% end %>
+
+      <% if @status == :playing %>
+        <p class="lead text-center">Make a guess:</p>
+        <%= form_for [@game, Turn.new] do |form| %>
+          <div class="form-group">
+            <%= form.text_field :letter, autofocus: true, class: "form-control" %>
+          </div>
+            <%= form.submit "Submit", class: "btn btn-default btn-block" %>
+        <% end %>
+      <% elsif @status == :won %>
+        <p class="text-center text-success lead"><strong>Congratulations</strong>, you won!</p>
+      <% elsif @status == :lost %>
+        <p class="text-center text-danger lead">Bad luck! The word was <strong><%= @word.word %></strong></p>
+      <% end %>
+
+      <% if @turns %>
+        <div class="bg-danger text-center guesses">
+          <p class="lead">Wrong guesses:</p>
+          <p><strong><%= @game.wrong_guesses.join" " %></strong></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
