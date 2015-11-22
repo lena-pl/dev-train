@@ -3,6 +3,7 @@ class Model
   attr_accessor :guess_two
   attr_accessor :boxes
   attr_reader :guesses_left
+  attr_reader :letters
 
   TOTAL_TURNS = 40
 
@@ -12,8 +13,8 @@ class Model
     @boxes = []
   end
 
-  def create_boxes(letters)
-    boxes = (letters + letters).chars.shuffle
+  def create_boxes(letters = @letters)
+    @boxes = (letters + letters).chars.shuffle
   end
 
   def submit_guess(guess)
@@ -21,6 +22,7 @@ class Model
       :invalid_guess
     else
       @attempted_guesses.push(guess)
+      puts "Your attempted guesses: #{@attempted_guesses.join(",")}"
     end
   end
 
@@ -30,7 +32,7 @@ class Model
 
   def handle_match(guess_one, guess_two)
     if matching_set?(guess_one, guess_two)
-      remove_pair(guess_one, guess_two)
+      remove_pair(guess_one)
     end
   end
 
@@ -38,9 +40,13 @@ class Model
     boxes[guess_one] == boxes[guess_two]
   end
 
-  def remove_pair(guess_one, guess_two)
-    boxes.delete_at(guess_one)
-    boxes.delete_at(guess_two)
+  def remove_pair(guess_one)
+    guess = boxes[guess_one]
+    boxes.map do |letter|
+      if letter == guess
+        boxes.delete(letter)
+      end
+    end
   end
 
   def in_progress?
@@ -48,23 +54,22 @@ class Model
   end
 
   def won?
-    false
+    @boxes.empty? && !lost?
   end
 
   def lost?
-    guesses_left == 0
+    guesses_left <= 0
   end
 
   def valid_guess?(guess)
-      is_integer?(guess) && in_range?(guess)
+      is_numeric?(guess) && in_range?(guess)
   end
 
-  def is_integer?(guess)
-    guess.is_a? Integer
+  def is_numeric?(guess)
+    guess.is_a? Numeric
   end
 
   def in_range?(guess)
-    guess >= 1 && guess <=20
+    guess.between?(0, 19)
   end
-
 end

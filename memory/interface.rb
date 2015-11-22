@@ -10,17 +10,22 @@ class Interface
   end
 
   def show_boxes(boxes, guess_one, guess_two)
+      puts(boxes.map {|box| "[#{box}]"}.join(" "))
       puts(boxes.each_with_index.map { |box, index| index == guess_one || index == guess_two ? "[#{box}]" : "[#{index + 1}]" }.join(" "))
   end
 
   def get_guess
     puts "Open a box by typing its number:"
-    gets.chomp.to_i
+    guess = gets.chomp.to_i-1
+    puts "You guessed #{guess}"
+    guess
   end
 
   def check_guess(guess)
     case @model.submit_guess(guess)
-    when :invalid_guess then puts "Your guess must be an integer between 1-20"
+    when :invalid_guess
+      puts "Your guess must be an integer between 1-20"
+      get_guess
     end
   end
 
