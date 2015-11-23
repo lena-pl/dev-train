@@ -62,7 +62,7 @@ class Model
   end
 
   def valid_guess?(guess)
-      is_numeric?(guess) && in_range?(guess)
+      is_numeric?(guess) && in_range?(guess) && under_box_amount?(guess)
   end
 
   def is_numeric?(guess)
@@ -71,5 +71,9 @@ class Model
 
   def in_range?(guess)
     guess.between?(0, 19)
+  end
+
+  def under_box_amount?(guess)
+    @boxes.length >= guess + 1
   end
 end

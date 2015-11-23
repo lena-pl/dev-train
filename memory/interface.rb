@@ -26,7 +26,7 @@ class Interface
   def check_guess(guess)
     case @model.submit_guess(guess)
     when :invalid_guess
-      puts "Your guess must be an integer between 1-20"
+      puts "Your guess must be an integer corresponding to one of the box numbers"
     else
       :valid
     end
