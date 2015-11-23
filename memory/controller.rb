@@ -19,11 +19,9 @@ class Controller
     @ui.show_boxes(@model.boxes, nil, nil)
 
     guess_one = @ui.get_guess
-    @ui.check_guess(guess_one)
     @ui.show_boxes(@model.boxes, guess_one, nil)
 
     guess_two = @ui.get_guess
-    @ui.check_guess(guess_two)
     @ui.show_boxes(@model.boxes, guess_one, guess_two)
 
     @model.handle_match(guess_one, guess_two)
@@ -37,15 +35,11 @@ class Controller
 
   def get_first_guess
     guess_one = @ui.get_guess
-    @model.submit_guess(guess_one)
-    @ui.check_guess(guess_one)
     @ui.show_boxes(@model.boxes, guess_one, nil)
   end
 
   def get_second_guess
     guess_two = @ui.get_guess
-    @model.submit_guess(guess_two)
-    @ui.check_guess(guess_two)
     @ui.show_boxes(@model.boxes, guess_one, guess_two)
   end
 end

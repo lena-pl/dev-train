@@ -15,9 +15,12 @@ class Interface
   end
 
   def get_guess
-    puts "Open a box by typing its number:"
+    guess_prompt
     guess = gets.chomp.to_i-1
-    puts "You guessed #{guess}"
+    while check_guess(guess) != :valid
+      guess_prompt
+      guess = gets.chomp.to_i-1
+    end
     guess
   end
 
@@ -25,7 +28,8 @@ class Interface
     case @model.submit_guess(guess)
     when :invalid_guess
       puts "Your guess must be an integer between 1-20"
-      get_guess
+    else
+      :valid
     end
   end
 
@@ -39,5 +43,9 @@ class Interface
     elsif @model.lost?
       puts "You lost. Better luck next time."
     end
+  end
+
+  def guess_prompt
+    puts "Open a box by typing its number:"
   end
 end
