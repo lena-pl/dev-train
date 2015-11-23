@@ -14,7 +14,7 @@ class TurnsController < ApplicationController
 
   private
   def turn_params
-    params[:turn].permit(:letter)
+    params.require(:turn).permit(:letter)
   end
 
 end
