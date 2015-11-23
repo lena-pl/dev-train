@@ -10,7 +10,6 @@ class Interface
   end
 
   def show_boxes(boxes, guess_one, guess_two)
-      puts(boxes.map {|box| "[#{box}]"}.join(" "))
       puts(boxes.each_with_index.map { |box, index| index == guess_one || index == guess_two ? "[#{box}]" : "[#{index + 1}]" }.join(" "))
   end
 

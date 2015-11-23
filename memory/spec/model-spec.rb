@@ -47,7 +47,7 @@ RSpec.describe Model do
 
     it "removes a successfully guessed pair" do
       allow(model).to receive(:boxes).and_return(["a","a","b","b"])
-      model.remove_pair(0,1)
+      model.remove_pair(1)
       expect(model.boxes.include? :boxes["a"]).to eq(false)
     end
 

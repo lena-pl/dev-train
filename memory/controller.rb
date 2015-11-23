@@ -30,16 +30,4 @@ class Controller
     system "clear" or system "cls"
     @ui.announce_tries_left unless !@model.in_progress?
   end
-
-  private
-
-  def get_first_guess
-    guess_one = @ui.get_guess
-    @ui.show_boxes(@model.boxes, guess_one, nil)
-  end
-
-  def get_second_guess
-    guess_two = @ui.get_guess
-    @ui.show_boxes(@model.boxes, guess_one, guess_two)
-  end
 end
