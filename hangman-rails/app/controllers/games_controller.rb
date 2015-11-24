@@ -13,23 +13,21 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new
+    @game = Game.create!
 
-    @game.save!
     redirect_to @game
   end
 
   private
 
   def encrypt(word, turns)
-    guesses = turns.map { |i| i.letter }
+    guesses = turns.pluck(:letter)
     word.chars.map do |character|
   		if guesses.include? character
   	    character
   		else
   			"_"
   		end
-    end.join" "
+    end.join(" ")
   end
-
 end

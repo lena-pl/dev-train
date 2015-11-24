@@ -6,7 +6,7 @@ class Game < ActiveRecord::Base
 
   before_validation :assign_random_word, on: :create
 
-  validates :word_id, presence: true
+  validates :word, presence: true
 
   def status
     if in_progress?
@@ -44,11 +44,10 @@ class Game < ActiveRecord::Base
     wrong_guesses.map(&:letter)
   end
 
-  protected
+  private
 
   def assign_random_word
-    word_ids = Word.pluck(:id)
-    self.word_id ||= word_ids.sample
+    self.word = Word.order("random()").first #SQLite?
   end
 
   def target_letters

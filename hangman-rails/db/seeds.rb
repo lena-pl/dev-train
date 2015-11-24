@@ -9,5 +9,5 @@
 dictionary = File.read("words.txt").split
 
 dictionary.each do |word|
-  Word.create([{ word: word }])
+  Word.create( word: word )
 end

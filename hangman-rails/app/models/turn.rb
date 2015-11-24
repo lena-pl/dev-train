@@ -7,7 +7,7 @@ class Turn < ActiveRecord::Base
     message: "%{value} is not a letter" }
   validates :letter, length: { is: 1,
     message: "Your guess must be 1 character long" }
-  validates :letter, uniqueness: {scope: :game_id,
+  validates :letter, uniqueness: {scope: :game,
     message: "You already guessed the letter %{value}"}
 
   protected
