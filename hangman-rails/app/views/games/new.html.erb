@@ -1,5 +1,8 @@
-<h1 class="text-center">New Game</h1>
-
-<%= form_for @game do |f| %>
-  <%= f.submit "New Game" %>
-<% end %>
+<div class="container new">
+  <div class="lead text-center">Welcome to hangman!</div>
+  <div class="row text-center">
+    <%= form_for @game do |f| %>
+      <%= f.submit "New Game", :class => 'btn btn-success btn-lg' %>
+    <% end %>
+  </div>
+</div>
